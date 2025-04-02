@@ -13,7 +13,7 @@ def create_planets():
         ["Ida","Welcome to the Ida where most of the galactic food comes from. Enjoy your stay!",None,["bushels of wheat","corn bushels","sacks of flour","bags of sunflower seeds","crates of cured meat","fertilizer bags","jars of honey","bars of soap"]],
         ["Mustafar","Careful! Welcome to the last port of safety in the firestorm. Be careful on Mustafar and you'll get out fine.",None,["evil plans","crates of charcoal","obsidian blocks"]],
         ["Victory","Welcome to the busiest spot in the greater Galactic way. Victory is the place to be!",None,["crates of shoes","boxes of gambling wins","sports memorabilia","game winning pucks","sports jerseys"]],
-        ["Florence","Welcome to the fashion show. All the clothes you may desire is found in Florence."3,["fabric bolts","linen dresses","crates of shoes","boxes of necklaces","billowy shirts","cotton bolts"]],
+        ["Florence","Welcome to the fashion show. All the clothes you may desire is found in Florence.",3,["fabric bolts","linen dresses","crates of shoes","boxes of necklaces","billowy shirts","cotton bolts"]],
         ["Rusty's Rocket Shop","Welcome to the my traveling repair shop! Rusty's Rocket Shop is swinging by and can do everything except stop!",0]
     ]
 
