@@ -34,7 +34,7 @@ def create_player(jsonSave=None):
         points = 0
         title = "Citizen"
         cargoManifest = {"letters":[],"packages":[]}
-        shipStats = {"cargoSpace":50,"cargoSpaceRemaining":50,"speed":50,"durability":50,"fuel":50}
+        shipStats = {"cargoSpace":50,"cargoSpaceRemaining":50,"speed":50,"durability":50,"fuelSpace":50,"fuelRemaining":50}
     playerObj = Player(loc,points,title,cargoManifest,shipStats)
     return playerObj
 
@@ -43,10 +43,10 @@ def setPlanets(jsonSave=None):
     if jsonSave != None:
         planetList = jsonSave["planetList"]
         #load from save
-        
     else:
         planetList = None
-    planetList = create_planets(planetList)
+    return create_planets(planetList)
+    # return planetList
         #take planets from planets json
 
 def setPlayer(jsonSave=None):
@@ -54,4 +54,52 @@ def setPlayer(jsonSave=None):
         playerObj = jsonSave["playerObj"]
     else:
         playerObj = None
-    playerObj = create_player(playerObj)
+    return create_player(playerObj)
+    # return playerObj
+
+def load_save(playerSave):
+    # with open(playerSave,"r") as loading:
+    loadedFile = json.load(playerSave)
+    return [setPlayer(loadedFile),setPlanets(loadedFile)]
+
+
+def new_game():
+    return [setPlayer(),setPlanets()]
+
+def save_game(playerSave,playerObj,planetList):
+    # playerSave = "player/player_save.json"
+    # planetSave = "assets/planets.json"
+
+    # planetReport = [p.data for p in planetList]
+    saveFile = {
+        "playerObj":[
+            playerObj.loc,
+            playerObj.points,
+            playerObj.title,
+            playerObj.cargoManifest,
+            playerObj.shipStats
+        ],
+        "planetList":(
+            [p.data for p in planetList]
+        )
+    }
+    try:
+        with open(playerSave,"w") as saving:
+            json.dump(saveFile,saving)
+        return "Game Saved"
+    except IndexError:
+        return "Problem Saving Game"
+
+def game_menu():
+    playerSave = "player/player_save.json"
+    # planetSave = "assets/planets.json"
+    choices = ["New Game","Load Game"]
+    #input to select menu item
+    userChoice = input(f"{choices[0]}\n{choices[1]}\n>  ")
+    if userChoice == choices[0]:
+        return new_game()
+    elif userChoice == choices[1]:
+        return load_save(playerSave)
+    else:
+        #invalid choice
+        return game_menu()
