@@ -16,6 +16,13 @@ def create_planets():
         ["Florence","Welcome to the fashion show. All the clothes you may desire is found in Florence.",3,["fabric bolts","linen dresses","crates of shoes","boxes of necklaces","billowy shirts","cotton bolts"]],
         ["Rusty's Rocket Shop","Welcome to the my traveling repair shop! Rusty's Rocket Shop is swinging by and can do everything except stop!",0]
     ]
+    pList = []
+    for i in range(planetList):
+        listObj = planetList[i]
+        planetObj = Planet(i,*listObj)
+        pList.append(planetObj)
+
+
 
 def setPlanets(jsonSave=None):
     if jsonSave != None:
