@@ -7,7 +7,7 @@ from player.player import Player
 def create_planets(planetList=None):
     if planetList == None:
         planetList = [
-            ["Post Office","Welcome to the Intergalactic Post Office! This is the hub of all letters to be delivered.",0],
+            ["Post Office","Welcome to the Intergalactic Post Office! This is the hub of all letters to be delivered.",0,["letters"]],
             ["Aboria","Welcome to the beautiful land of Aboria! We specializze in creating products from our deep forest.",None,["stacks of lumber","crates of paper","paper fans","acorn bundles"]],
             ["Loogonia","Welcome to Loogonia where sea stretches as far as the eye can see.",None,["crates of fish","barrels of salt water","salt cakes","jugs of desalinated water","fishing poles","crates of dried seaweed"]],
             ["MetroCity","Welcome to the halogen hub of the known universe! All the best and brightest find their way here to MetroCity.",3,["entertainment discs","crates of books","textbooks","musical instruments","scholarly journals","sculptures"]],
@@ -16,7 +16,7 @@ def create_planets(planetList=None):
             ["Mustafar","Careful! Welcome to the last port of safety in the firestorm. Be careful on Mustafar and you'll get out fine.",None,["evil plans","crates of charcoal","obsidian blocks"]],
             ["Victory","Welcome to the busiest spot in the greater Galactic way. Victory is the place to be!",None,["crates of shoes","boxes of gambling wins","sports memorabilia","game winning pucks","sports jerseys"]],
             ["Florence","Welcome to the fashion show. All the clothes you may desire is found in Florence.",3,["fabric bolts","linen dresses","crates of shoes","boxes of necklaces","billowy shirts","cotton bolts"]],
-            ["Rusty's Rocket Shop","Welcome to the my traveling repair shop! Rusty's Rocket Shop is swinging by and can do everything except stop!",0]
+            ["Rusty's Rocket Shop","Welcome to the my traveling repair shop! Rusty's Rocket Shop is swinging by and can do everything except stop!",0,["lost packages","dead letters","nuts and bolts"]]
         ]
 
     pList = []

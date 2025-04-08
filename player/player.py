@@ -14,7 +14,7 @@ class Player():
             try:
                 for entry in value:
                     quantity,destination,item = entry
-                    cargoStr += f"\n{quantity} {item} to {destination}"
+                    cargoStr += f"\n{quantity} {item} to {destination.nameL}"
             except IndexError:
                 cargoStr += ""
         return cargoStr
