@@ -426,10 +426,13 @@ for t in test_list:
     cur_sec = secs_to_GPS(current_seconds,new_planet)
     print(cur_sec)
 
+
 print('CURRENT TIME')
 while True:
     earth_actual = planet_setup('Earth','Sol',timedelta(days=Perihelion_Interval).total_seconds(),rotation_length=timedelta(hours=23,minutes=56,seconds=4.09).total_seconds(),override={'ray_length':12,'frac':24,'flit':60,'splints':60,'specs':60})
-    current_seconds = datetime.now().astimezone()-Zenith
+    current_seconds = datetime.now().astimezone()-datetime.strptime(f'2026-01-01 00:00',f'%Y-%m-%d %H:%M').astimezone()
+    # print(datetime.strptime(f'2026-01-01 00:00',f'%Y-%m-%d %H:%M').astimezone()
+    current_seconds += timedelta(hours=8)
     cur_sec = secs_to_GPS(current_seconds,earth_actual)
     print(cur_sec,end='\r')
     time.sleep(.2)

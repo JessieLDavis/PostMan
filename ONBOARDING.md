@@ -1,6 +1,7 @@
 # Welcome {new hire}!
 
- > From the age of land to the age of space, letters still connect the human race. ~ J. Hubbard, Lunar Postmaster General at the GPS HUB Dedication Ceremony
+ > From the age of land to the age of space, letters still connect the human race. 
+ > ~ J. Hubbard, Lunar Postmaster General at the GPS HUB Dedication Ceremony
 
 Congratulations on starting your new job at the Galactic Postal service! You are now part of a centuries long tradition of successful communication and delivery. Together we will join the galaxy closer together! Within this document, you should find all the information you will need to succeed in your new role.
 
@@ -10,9 +11,12 @@ Congratulations on starting your new job at the Galactic Postal service! You are
 As a member of the Galactic Postal Service, you will be transporting **letters** and **packages** from the HUB Satellite to the far reaches of the settled galaxy and back. 
 
 **Current Territory**: Solar - Alpha
-Your current role is only approved for within your current solar territory. Packages that would take you outside the reaches of the **Alpha** star system must be returned to the current solar HUB for your security and safety.
 
-You will be provided a delivery vehicle when hired. Fuel consumption used in the process of delivery will be reimbursed at the end of each Galactic Cycle provided at least one delivery is completed. **PLEASE NOTE: The automated reimbursement can only fully reimburse for direct transit to the target location. Course deviations are at cost to the employee and may lead to less than full reimbursement.**
+>Your current role is only approved for within your current solar territory. Packages that would take you outside the reaches of the **Alpha** star system must be returned to the current solar HUB for your security and safety.
+
+You will be provided a delivery vehicle when hired. Fuel consumption used in the process of delivery will be reimbursed at the end of each Galactic Cycle provided at least one delivery is completed. 
+
+***PLEASE NOTE:** The automated reimbursement can only fully reimburse for direct transit to the target location. Course deviations are at cost to the employee and may lead to less than full reimbursement.*
 
 You may upgrade to a new delivery vehicle at preapproved locations within the HUB or with approved resellers. Upgrading to a new vehicle that is not at an approved location will result in only half the fuel cost being reimbursed at the end of each Galactic Cycle.
 
@@ -43,9 +47,14 @@ You may upgrade to a new delivery vehicle at preapproved locations within the HU
 
 ### **Grot Notation**
 
-Example:
-Gregorian Time:
+System: Planet Cycle | Ray / Rotation | Frac : Flit_Splint.Specs.Rem
 
-A 000000 0000 0000 00_00...
+**Formal:**
+>Sol: Earth 0C | 000001/10000 | 10100:10010_000.000.010101
+
+**Casual:**
+
+>Sol: Earth 0C | 01/16 | 20:18_0.0.21
+
 
 
