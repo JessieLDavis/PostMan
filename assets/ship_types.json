@@ -1,0 +1,38 @@
+{
+    "Tri": {
+        "fuel_range": [50,100],
+        "cost_range":[100,500],
+        "inv_range":[100,200],
+        "burn_rate":[30,100]
+    },
+    "Cargo": {
+        "fuel_range": [300,500],
+        "cost_range":[1000,3000],
+        "inv_range":[300,500],
+        "burn_rate":[50,80]
+    },
+    "Discus": {
+        "fuel_range": [200,400],
+        "cost_range":[300,800],
+        "inv_range":[40,80],
+        "burn_rate":[30,80]
+    },
+    "Yaught": {
+        "fuel_range": [100,500],
+        "cost_range":[1000,5000],
+        "inv_range":[200,400],
+        "burn_rate":[10,50]
+    },
+    "Nautilus": {
+        "fuel_range": [50,100],
+        "cost_range":[50000,80000],
+        "inv_range":[1000,2000],
+        "burn_rate":[100,300]
+    },
+    "Wurst": {
+        "fuel_range": [50,100],
+        "cost_range":[100,500],
+        "inv_range":[100,200],
+        "burn_rate":[3,9]
+    }
+}
