@@ -31,7 +31,19 @@ You may upgrade to a new delivery vehicle at preapproved locations within the HU
 - **Flit**: 1/8 of a frac.
 - **Splint**: 1/4 of a flit
 - **Spec**: 1/4 of a splint
-- **Sub-spec**: Any additional fractional levels below splint
+- **Rem**: Any additional fractional levels below splint. According to tradition, this unit is tied to the resonance of the cesium-133 atom and is monitored within the local HUB satellite.
+
+// - **LY**: Abbreviation of lightyear. Used to describe distances and calculate burnrate of fuel. (Cant change between systems so what would it link to if the hub has local time. Tie to seconds?)
+- **ls**: Abbreviation of lightspeed. Speed of light in a vacuum. (299,792,458 m/sec)
+- **fm**: Abbreviation of fathom. Base distance unit. Matches to the base human height metric when designing ships and satellites. (6ft without the effects of planetary gravity) (1.8288 meters)
+- **v**: Abbreviation of verne. Matches to 52.8 million fathoms.
+
+- **knot**: Speed it takes to travel a verne outside a wormholes
+- **purl**: Speed it takes to travel a verne within a wormhole
+
+- **c**: Abbreviation of cake. Used to describe a 200 ton measure of frozen or solid fuel. Generally divided into blocks.
+- **block**: 1/4 of a cake and equal to a 50 ton frozen section of gas or liquid fuel used in thermal engines.
+- **rod**: 1/4 of a cake of radioactive or electrochemical fuel used in reaction engines.
 
 ### **Solar Calendar Reference**
 >| Ray | Name | Detail |
