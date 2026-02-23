@@ -2,6 +2,7 @@ import json, os
 import random
 from nav_page import Planet
 from player.player import Player
+from terminal_response import get_multiple_choice
 
 # self,navLoc,name,description,economy=None,products=None,population=None,fluidCapital=None
 def create_planets(planetList=None):
@@ -20,8 +21,8 @@ def create_planets(planetList=None):
         ]
 
     pList = []
-    for i in len(planetList):
-        listObj = planetList[i]
+    for i, listObj in enumerate(planetList):
+        # listObj = i
         planetObj = Planet(i,*listObj)
         pList.append(planetObj)
     return pList
@@ -95,11 +96,14 @@ def game_menu():
     # planetSave = "assets/planets.json"
     choices = ["New Game","Load Game"]
     #input to select menu item
-    userChoice = input(f"{choices[0]}\n{choices[1]}\n>  ")
-    if userChoice == choices[0]:
+    userChoice = get_multiple_choice('',choices,add_other=True,other_text='Back')
+    # userChoice = input(f"{choices[0]}\n{choices[1]}\n>  ")
+    if userChoice == 'New Game':
         return new_game()
-    elif userChoice == choices[1]:
+    elif userChoice == 'Load Game':
         return load_save(playerSave)
+    elif userChoice == 'Back':
+        return None
     else:
         #invalid choice
         return game_menu()
