@@ -1,3 +1,5 @@
+from random import choices
+
 def get_menu_response(question:str,option_list:list,title_str:str=None,subtitle_str:str=None,sort_opts:bool=False,addOther:bool=True,other_text:str='Quit'):
     if sort_opts:
         option_list.sort()
@@ -79,5 +81,27 @@ def prompt_response(valid_options:dict={'search':'Find letters at the Post Offic
         print(f'{userResponse} not accepted.')
     return prompt_response()
 
-
+def get_planet_choice(question:str,playerObj,planetObj):
+    # from nav_page import Planet
+    includeGas = choices([True,False],[1,4],k=1)[0]
+    if playerObj.loc.space_location in ['static','mystery']:
+        planet_list = planetObj.get_planets(includeGas=includeGas,onlyNames=False)
+    elif playerObj.loc.space_location in ['west','east']:
+        planet_list = planetObj.get_planets(includeGas=includeGas,onlyNames=False,side=playerObj.loc.space_location)
     
+    option_str = [o.showLoc() for o in planet_list]
+    
+    # if add_other:
+    #     option_str.append(f"\n0 - {other_text}")
+    option_str = '\n'.join(option_str)
+    userResponse = input(f'{question}\n{option_str}\n>')
+    try:
+        userResponse = int(userResponse)
+        selected = [plan for plan in planet_list if plan.navLoc == userResponse][0]
+        print(f'[{selected.nameL} selected]\n')
+        return selected
+    except ValueError:
+        print(f'{userResponse} not accepted. Please only include integers.')
+    except IndexError:
+        print(f'{userResponse} is not accepted. Please select a value from the list.')
+    return get_planet_choice(question,playerObj,planetObj)

@@ -1,15 +1,19 @@
 from random import choice, choices
+from assets.animations import *
+from terminal_response import get_multiple_choice, get_planet_choice
 
-def search(playerObj,planetList):       
+def search(playerObj,planetClass):       
     # choice_range = range(30,step=2)
     num = choice(range(0,30,2))
     if num == 0:
         print("No packages found.")
         return playerObj
-    destination = [plan for plan in planetList if plan != playerObj.loc]
+    destination = [plan for plan in planetClass.planet_dict.items() if plan != playerObj.loc]
+    origin = playerObj.loc
     destination = choice(destination)
     product = choice(playerObj.loc.products)
-    selection = (num,destination,product)
+    selection = (num,destination,product,origin)
+    print(f'Loaded {num} {product} to deliver to {destination.showLoc()}')
     if playerObj.loc.nameL == "Post Office":
         playerObj.cargoManifest["letters"].append(selection)
     else:
@@ -21,49 +25,42 @@ def deliver(playerObj,anySuccess=False):
     packageList = [plan for plan in playerObj.cargoManifest["packages"] if plan[1] == playerObj.loc]
     deliverList = letterList + packageList
     if len(deliverList) != 0:
+        print('Unloading cargo.')
         for item in deliverList:
-            number, destination, product = item
+            number, destination, product, origin = item
             playerObj.loc.playerImpact += number
-            playerObj.points += (number*10)
+            # playerObj.points += (number*10)
+            newPts = (number+destination.playerImpact)*10
+            playerObj.points += newPts
+
             destination.playerImpact += number
+            try:
+                destination.planetRelations[origin]
+            except KeyError:
+                destination.planetRelations[origin] = 0
+            destination.planetRelations[origin] += number
+
+            print(f'{number} {product} delivered!')
+            print(f'[+ {newPts} pts]')
             if product == "letters":
                 playerObj.cargoManifest["letters"].remove(item)
             else:
                 playerObj.cargoManifest["packages"].remove(item)
-        return deliver(playerObj,True)
+        return playerObj,True
     else:
+        print('No items to deliver! Reloading cargo.')
         return playerObj, anySuccess
     
-def leave(playerObj,planetList):
-    planetOptionsSplit = int((len(planetList)-2)/2)+1
-    planetListMinus = [planet for planet in planetList if planet.nameL != "Rusty's Rocket Shop"]
-    if playerObj.loc.nameL == "Post Office" or playerObj.loc.nameL == "Rusty's Rocket Shop":
-        # planetOptions = [planet for planet in planetList if planet != playerObj.loc]
-        planetOptions = [planet for planet in planetListMinus if planet != playerObj.loc]
-    else:
-        planetOptionsWest = planetList[:planetOptionsSplit]
-        planetOptionsEast = planetList[planetOptionsSplit:]
-        if playerObj.loc in planetOptionsWest:
-            planetOptions = planetOptionsWest
-        else:
-            planetOptions = planetOptionsEast
-        planetOptions.append(planetList[0])
-        # planetOptionsWest.append(planetList[0])
-        # planetOptionsEast.append(planetList[0])
-    rockyShows = choices([True,False],[1,4])
-    rocky = [planet for planet in planetList if planet.nameL == "Rusty's Rocket Shop"][0]
-    if rockyShows == True and playerObj.loc.nameL !="Rusty's Rocket Shop":
-        planetOptions.append(rocky)
+def leave(playerObj,planetObj):
     print(f"You are now leaving {playerObj.loc.nameL}.")
-    for planetObj in planetOptions:
-        print(planetObj.showLoc(),end=" | ")
-    planetChoice =input("Choose the number of the planet you would like to visit.\n>  ")
+    planet_choice = get_planet_choice('Choose the number of the planet you would like to visit.',playerObj,planetObj)
+
     try:
-        planetList[int(planetChoice)]
-        playerObj.loc = planetList[int(planetChoice)]
+
+        playerObj.loc = planet_choice
         return playerObj
     except IndexError:
-        #Failed to fly
+        #Failed to fly?
         return playerObj
 
     

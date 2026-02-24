@@ -7,9 +7,9 @@ from playerChoices import search,deliver,leave
 
 def mainMenu():
     # print('GalacticPost\n')
-    options = ["Play"]#,"Options"]
+    options = ["Play","Options"]
     userChoice = get_menu_response('',options,'GalacticPost','Intragalactic Postal Delivery',addOther=True)
-    if userChoice == options[0]:
+    if userChoice == 'Play':
         try:
             playerObj, planetList = game_menu()
             active = True
@@ -17,9 +17,9 @@ def mainMenu():
             active = False
         while active:
             active = playing(playerObj,planetList)
-    elif userChoice == options[1]:
+    elif userChoice == 'Options':
         options = options_menu()
-    elif userChoice == options[2]:
+    elif userChoice == 'Quit':
         return
     else:
         return mainMenu()

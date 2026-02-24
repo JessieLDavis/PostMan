@@ -5,7 +5,7 @@ from player.player import Player
 from terminal_response import get_multiple_choice
 
 # self,navLoc,name,description,economy=None,products=None,population=None,fluidCapital=None
-def create_planets(planetList=None):
+def create_planets(planetList=None): #override w Planet.create_map?
     if planetList == None:
         planetList = [
             ["Post Office","Welcome to the Intergalactic Post Office! This is the hub of all letters to be delivered.",0,["letters"]],
@@ -61,6 +61,7 @@ def setPlayer(jsonSave=None):
 def load_save(playerSave):
     # with open(playerSave,"r") as loading:
     loadedFile = json.load(playerSave)
+
     return [setPlayer(loadedFile),setPlanets(loadedFile)]
 
 
@@ -94,10 +95,15 @@ def save_game(playerSave,playerObj,planetList):
 def game_menu():
     playerSave = "player/player_save.json"
     # planetSave = "assets/planets.json"
-    choices = ["New Game","Load Game"]
-    #input to select menu item
-    userChoice = get_multiple_choice('',choices,add_other=True,other_text='Back')
-    # userChoice = input(f"{choices[0]}\n{choices[1]}\n>  ")
+    saveLoad = load_save(playerSave)
+    if isinstance(saveLoad,dict):
+
+        choices = ["New Game","Load Game"]
+        #input to select menu item
+        userChoice = get_multiple_choice('',choices,add_other=True,other_text='Back')
+        # userChoice = input(f"{choices[0]}\n{choices[1]}\n>  ")
+    else:
+        userChoice = 'New Game'
     if userChoice == 'New Game':
         return new_game()
     elif userChoice == 'Load Game':

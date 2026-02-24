@@ -13,11 +13,12 @@ class Player():
             cargoStr += f"\n{key}:"
             try:
                 for entry in value:
-                    quantity,destination,item = entry
-                    cargoStr += f"\n{quantity} {item} to {destination.nameL}"
+                    quantity,destination,item, origin = entry
+                    cargoStr += f"\n{quantity} {item} to {destination.nameL} from {origin.nameL}"
             except IndexError:
                 cargoStr += ""
         return cargoStr
+    
     def status(self):
         statusStr = ""
         for key, value in self.shipStats.items():
