@@ -46,7 +46,8 @@ def setPlanets(jsonSave=None):
         #load from save
     else:
         planetList = None
-    return create_planets(planetList)
+    return Planet.create_map(planet_seed=planetList)
+    # return create_planets(planetList)
     # return planetList
         #take planets from planets json
 
@@ -95,7 +96,8 @@ def save_game(playerSave,playerObj,planetList):
 def game_menu():
     playerSave = "player/player_save.json"
     # planetSave = "assets/planets.json"
-    saveLoad = load_save(playerSave)
+    # saveLoad = load_save(playerSave)
+    saveLoad = None
     if isinstance(saveLoad,dict):
 
         choices = ["New Game","Load Game"]

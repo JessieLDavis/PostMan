@@ -63,4 +63,6 @@ def leave(playerObj,planetObj):
         #Failed to fly?
         return playerObj
 
+def show_map(playerObj,planetObj):
+    map_display(playerObj,planetObj)
     

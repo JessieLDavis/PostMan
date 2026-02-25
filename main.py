@@ -2,7 +2,8 @@
 from gameMenu import game_menu
 from optionsMenu import options_menu
 from terminal_response import get_menu_response, get_multiple_choice, prompt_response
-from playerChoices import search,deliver,leave
+from playerChoices import search,deliver,leave,show_map
+from nav_page import Planet
 # from nav_page import selectio
 
 def mainMenu():
@@ -14,6 +15,7 @@ def mainMenu():
             playerObj, planetList = game_menu()
             active = True
         except Exception as e:
+            print(e)
             active = False
         while active:
             active = playing(playerObj,planetList)
@@ -23,22 +25,24 @@ def mainMenu():
         return
     else:
         return mainMenu()
-    return mainMenu()
+    # return mainMenu()
     
-def playing(playerObj,planetList)->bool:
+def playing(playerObj,planetObj:Planet)->bool:
     if playerObj.loc == None:
-        playerObj.loc = planetList[0]
+        playerObj.loc = planetObj.post_office
     print(playerObj.loc.welcomeMsg())
     print(playerObj.cargo())
     response = prompt_response()
     if response == 'quit':
         return False
     elif response == 'search':
-        search(playerObj,planetList)
+        search(playerObj,planetObj)
     elif response == 'deliver':
-        deliver(playerObj,planetList)
+        deliver(playerObj)
     elif response == 'leave':
-        leave(playerObj,planetList)
+        leave(playerObj,planetObj)
+    elif response == 'map':
+        show_map(planetObj,planetObj)
     return True
 
     

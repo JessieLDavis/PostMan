@@ -35,7 +35,7 @@ def get_menu_response(question:str,option_list:list,title_str:str=None,subtitle_
         elif userResponse == 0 and addOther == False:
             raise IndexError
         selected = option_list[userResponse-1]
-        print(f'[{userResponse} selected]\n')
+        print(f'[{userResponse}: {selected} selected]\n')
         return selected
     except ValueError:
         print(f'{userResponse} not accepted. Please only include integers.')

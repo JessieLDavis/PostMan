@@ -118,6 +118,8 @@ class Planet():
                 planetObj.space_location = 'east'
                 Planet.planet_east.append(planetObj)
                 isWest = True
+            print(planetObj.space_location,' ',planetObj.nameL," ",planetObj.navLoc)
+        # print([f"{p.nameL}: {p.space_location} {p.navLov}" for p in Planet.planet_dict.values()])
         return Planet
 
 
