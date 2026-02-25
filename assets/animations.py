@@ -141,7 +141,6 @@ def load_cargo(letters_to_unload=0,packages_to_unload=0):
     letter = '/'
 
     # load packages from left and letters from right
-
     
 
             
