@@ -1,7 +1,7 @@
 import time
 import os
-from nav_page import Planet
-from player.player import Player
+# from nav_page import Planet
+# from player.player import Player
 def launching():
     #https://www.asciiart.eu/ascii-night-sky-generator
     os.system('cls')
@@ -38,7 +38,7 @@ def launching():
         os.system('cls')
         print(nightsky_content)
         # print('-----'*10)
-        time.sleep(.2)
+        time.sleep(.02)
         
         nightsky_content = nightsky.get('content').split('\n')
 
@@ -78,11 +78,11 @@ def landing():
         os.system('cls')
         print(nightsky_content)
         # print('-----'*10)
-        time.sleep(.2)
+        time.sleep(.02)
         
         nightsky_content = nightsky.get('content').split('\n')
 
-def map_display(playerObj:Player=None,planet_obj:Planet=None):
+def map_display(playerObj=None,planet_obj=None):
     os.system('cls')
     if playerObj != None:
         current_loc = playerObj.loc
@@ -102,46 +102,111 @@ def map_display(playerObj:Player=None,planet_obj:Planet=None):
     if current_loc != None:
         print(f"Current location: {current_loc.nameL}")
 
-def unload_cargo(letters_to_unload=0,packages_to_unload=0):
-    ship_line = "---------------------------------__<-[ooo]->__---------------------------------"
+# def unload_cargo(letters_to_unload=0,packages_to_unload=0):
+#     ship_line = "---------------------------------__<-[ooo]->__---------------------------------"
 
-def pyramid(amount,baseLayer=20):
+def pyramid(amount,baseLayer=15):
     row_cts = []
     amount = amount
     while amount> baseLayer:
         row_cts.append(baseLayer)
         amount -= baseLayer
     nextLayer = baseLayer
+    lastLayer = baseLayer
     while amount > 0 and nextLayer>0:
-        nextLayer = baseLayer-2
+        nextLayer = lastLayer-2
         if amount >= nextLayer:
             row_cts.append(nextLayer)
             amount -= nextLayer
         else:
             pass
+        lastLayer = nextLayer
     row_cts.append(amount)
     row_cts.sort(reverse=True)
     return row_cts
 
 
 
-def load_cargo(letters_to_unload=0,packages_to_unload=0):
+def view_cargo(letter_amount=0,package_amount=0):
     ship_line = "---------------------------------__<-[ooo]->__---------------------------------"
-    if letters_to_unload>0:
-        letter_rows = pyramid(letters_to_unload)
+    # os.system('cls')
+    if letter_amount>0:
+        letter_rows = pyramid(letter_amount)
     else:
         letter_rows = []
 
-    if packages_to_unload>0:
-        package_rows = pyramid(packages_to_unload)
+    if package_amount>0:
+        package_rows = pyramid(package_amount)
     else:
         package_rows = []
         
     package = '[]'
     letter = '/'
-
-    # load packages from left and letters from right
+    longest_side = max(len(package_rows),len(letter_rows))
     
+    # load packages from left and letters from right
+    row_list = []
+    for ind in range(longest_side):
+        base = '                                 '
+        row_str = []
+        try:
+            p = package_rows[ind]
+            p = p*package
+            p = f"{(len(base)-len(p))*' '}{p}"
+        except IndexError:
+            p = base
+
+        row_str.append(p)
+
+        #add mid
+        mid = f"{" "*13}"
+        row_str.append(mid)
+
+        try:
+            l = letter_rows[ind]
+            l = l*letter
+            l = f"{l}{(len(base)-len(l))*' '}"
+        except IndexError:
+            l = base
+        row_str.append(l)
+
+        row_str = ''.join(row_str)
+        row_list.append(row_str)
+    row_list.reverse()
+    row_list.append(ship_line)
+    row_list = '\n'.join(row_list)
+    print(row_list)
+
+
+def unload_cargo(letters_to_unload=0,packages_to_unload=0):
+    os.system('cls')
+    if letters_to_unload == 0 and packages_to_unload == 0:
+        view_cargo()
+    else:
+        while letters_to_unload>0 and packages_to_unload>0:
+            os.system('cls')
+            view_cargo(letters_to_unload,packages_to_unload)
+            if letters_to_unload!=0:
+                letters_to_unload -=1
+            if packages_to_unload != 0:
+                packages_to_unload -= 1
+            time.sleep(1)
+    return
+
+def load_cargo(letters_to_load=0,packages_to_load=0):
+    os.system('cls')
+    if letters_to_load == 0 and packages_to_load == 0:
+        view_cargo()
+    else:
+        while letters_to_load>0 and packages_to_load>0:
+            os.system('cls')
+            view_cargo(letters_to_load,packages_to_load)
+            if letters_to_load!=0:
+                letters_to_load -=1
+            if packages_to_load != 0:
+                packages_to_load -= 1
+            time.sleep(1)
+    return
 
             
 
@@ -151,20 +216,36 @@ def test_animations():
 
     print('Launching:')
     launching()
-    input('---'*10)
+    input('-'*80)
     print('Landing:')
     landing()
-    input('---'*10)
+    input('-'*80)
     print('Unloading:')
     unload_cargo()
-    input('---'*10)
+    input('-'*80)
+    unload_cargo(10,10)
+    input('-'*80)
+    unload_cargo(50,10)
+    input('-'*80)
+    unload_cargo(10,50)
+    input('-'*80)
+    unload_cargo(1,5)
+    input('-'*80)
     print('Loading:')
     load_cargo()
-    input('---'*10)
+    input('-'*80)
+    load_cargo(10,10)
+    input('-'*80)
+    load_cargo(50,10)
+    input('-'*80)
+    load_cargo(10,50)
+    input('-'*80)
+    load_cargo(5,1)
+    input('-'*80)
 
     return
 
-# test_animations()
+test_animations()
 
 "':, ,','., ,:':, ,','., ,:':,                     ,:':, ,','., ,:':, ,','., ,:'"
 ",','., ,:':, ,','., ,:':, ,','.,               ,','., ,:':, ,','., ,:':, ,','.,"
