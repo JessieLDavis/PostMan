@@ -103,24 +103,34 @@ class Planet():
         for i, listObj in enumerate(planet_seed):
             # listObj = i
             planetObj = Planet(i,*listObj)
-            Planet.planet_dict[planetObj.nameL] = planetObj
-            if planetObj.nameL.startswith('Rocky'):
+            if ' Shop' in planetObj.nameL:
                 planetObj.space_location = 'mystery'
                 Planet.gas_station[planetObj.nameL] = planetObj
-            elif planetObj.nameL.startswith('Post Office'):
-                planetObj.space_location = 'static'
-                Planet.post_office = planetObj
-            elif isWest:
-                planetObj.space_location = 'west'
-                Planet.planet_west.append(planetObj)
-                isWest = False
             else:
-                planetObj.space_location = 'east'
-                Planet.planet_east.append(planetObj)
-                isWest = True
+                Planet.planet_dict[planetObj.nameL] = planetObj
+                if planetObj.nameL.startswith('Post Office'):
+                    planetObj.space_location = 'static'
+                    Planet.post_office = planetObj
+                elif isWest:
+                    planetObj.space_location = 'west'
+                    Planet.planet_west.append(planetObj)
+                    isWest = False
+                else:
+                    planetObj.space_location = 'east'
+                    Planet.planet_east.append(planetObj)
+                    isWest = True
             print(planetObj.space_location,' ',planetObj.nameL," ",planetObj.navLoc)
         # print([f"{p.nameL}: {p.space_location} {p.navLov}" for p in Planet.planet_dict.values()])
         return Planet
+    
+    def get_fuel_price(self):
+        #price per block. should be relatively cheap for now?
+        basePrice = 300 - (self.playerImpact/1000)
+        if basePrice < 0:
+            basePrice = 0
+        else:
+            basePrice = round(basePrice,0)
+        return basePrice
 
 
     

@@ -1,5 +1,21 @@
 from random import choices
 
+PLAYER_OPTS = {
+'search':'Find letters at the Post Office or packages at different planets',
+'deliver':'Drop letters or packages at the target destination',
+
+'check fuel': 'Get current fuel level',
+'refuel': 'Get fuel at current market rate',
+
+'leave':'Travel to another station or planet',
+'map': 'Show planetary map',
+'status': 'Show player stats',
+'influence': 'Show player - planet relationship',
+
+'help':'Show choice options',
+'quit':'Exit the game'
+}
+
 def get_menu_response(question:str,option_list:list,title_str:str=None,subtitle_str:str=None,sort_opts:bool=False,addOther:bool=True,other_text:str='Quit'):
     if sort_opts:
         option_list.sort()
@@ -68,7 +84,7 @@ def get_multiple_choice(question:str,option_list:list,sort_opts:bool=False,add_o
         print(f'{userResponse} is not accepted. Please select a value from the list.')
     return get_multiple_choice(question,option_list,sort_opts,add_other,other_text)
 
-def prompt_response(valid_options:dict={'search':'Find letters at the Post Office or packages at different planets','deliver':'Drop letters or packages at the target destination','leave':'Travel to another station or planet','help':'Show choice options','quit':'Exit the game'}):
+def prompt_response(valid_options:dict=PLAYER_OPTS):
     userResponse=input('> ').lower()
     if userResponse == 'help':
         for k, v in valid_options.items():

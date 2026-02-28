@@ -6,7 +6,11 @@ class Player():
         self.cargoManifest = cargoManifest #letters: [(#, destination,item)], packages: [(#,destination,item)]
         self.shipStats = shipStats #cargoSpaceRemaining, speed, fuel, durability 
     def __str__(self):
-        return f"{self.loc}\n{self.points}\n{self.cargo()}\n{self.status}"
+        baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
+        # if self.shipStats.get('fuelRemaining')\
+        fuel_perc = self.check_fuel()
+        return f"{baseStats}\n{fuel_perc}\n\n"
+    
     def cargo(self):
         cargoStr = ""
         for key, value in self.cargoManifest.items():
@@ -25,5 +29,46 @@ class Player():
             statusStr += f"{key}: {value}\n"
         return statusStr
     
+    def check_fuel(self,showWarning:bool=True):
+        fuelMax = self.shipStats.get('fuelSpace')
+        fuelRem = self.shipStats.get('fuelRemaining')
+        fuelPerc = round(fuelRem/fuelMax,2)
+        if fuelPerc <= .25:
+            print(f'LOW FUEL: {fuelPerc*100}%')
+        return fuelPerc
 
-            
+    def ship_cargo_set(self):
+        # print(self.shipStats.keys())
+        cargoMax = self.shipStats.get('cargoSpace')
+        cargoFill = 0
+        for k,v_list in self.cargoManifest.items():
+            for v in v_list:
+                cargoFill += v[0]
+        cargoRem = cargoMax - cargoFill
+        self.shipStats['cargoSpaceRemaining'] = cargoRem
+        return
+    
+    def ship_fuel_drain(self,drainAmount)-> bool:
+        # fuelMax = self.shipStats.get('fuelSpace')
+        fuelRem = self.shipStats.get('fuelRemaining')
+        if fuelRem == 0:
+            print('Not enough fuel to launch!')
+            return False
+        if drainAmount > fuelRem:
+            print('Not enough fuel to reach destination!')
+            return False
+        fuelRem -= drainAmount
+        self.shipStats['fuelRemaining'] = fuelRem
+        return True
+
+    def ship_refuel(self)->bool:
+        fuelMax = self.shipStats.get('fuelSpace')
+        fuelRem = self.shipStats.get('fuelRemaining')
+
+        if fuelRem == fuelMax:
+            print('Fuel tank already at maximum')
+            return False
+        self.shipStats['fuelRemaining'] = fuelMax
+        return True
+    
+

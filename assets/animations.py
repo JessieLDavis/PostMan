@@ -107,24 +107,74 @@ def map_display(playerObj=None,planet_obj=None):
 
 def pyramid(amount,baseLayer=15):
     row_cts = []
-    amount = amount
-    while amount> baseLayer:
-        row_cts.append(baseLayer)
-        amount -= baseLayer
-    nextLayer = baseLayer
-    lastLayer = baseLayer
-    while amount > 0 and nextLayer>0:
-        nextLayer = lastLayer-2
-        if amount >= nextLayer:
-            row_cts.append(nextLayer)
-            amount -= nextLayer
-        else:
-            pass
-        lastLayer = nextLayer
-    row_cts.append(amount)
-    row_cts.sort(reverse=True)
-    return row_cts
+    # amount = amount
+    # while amount> baseLayer:
+    #     row_cts.append(baseLayer)
+    #     amount -= baseLayer
+    # nextLayer = baseLayer
+    # lastLayer = baseLayer
+    # while amount > 0 and nextLayer>0:
+    #     nextLayer = lastLayer-2
+    #     if amount >= nextLayer:
+    #         row_cts.append(nextLayer)
+    #         amount -= nextLayer
+    #     else:
+    #         pass
+    #     lastLayer = nextLayer
+    # row_cts.append(amount)
+    # row_cts.sort(reverse=True)
+    # return row_cts
+    base_cts = []
+    if amount%2 == 0: #even
+        ct = 2
+    else:
+        ct = 1
+    while amount>ct and ct < baseLayer:
+        base_cts.append(ct)
+        amount -= ct
+        ct += 1
+    while amount>=ct: #if hit max
+        base_cts.append(ct)
+        amount -= ct
+    if amount != 0:
+        base_cts.append(amount)
+    base_cts.sort(reverse=True) 
+    return base_cts
 
+            
+
+
+
+
+def make_pyramid_frames(total_amount,pyramid_list,string_unit,isEven=False,orientation='right')->list:
+    #reverse for loading
+    base_layer = max(pyramid_list)
+    height = len(pyramid_list)
+    for x in range(total_amount):
+        #x is frame?
+        layer = []
+        for py in pyramid_list:
+            if py <= base_layer:
+                pass
+
+def make_conveyor_frames(total_amount,frame_width,string_unit,orientation='right'):
+    #basically while longer than frame_width, travel direction
+    section_size = len(string_unit)
+    gap_size = 4
+    max_motion = frame_width/(section_size+gap_size)
+    frames = []
+    for x in range(gap_size+1):
+        pre = x
+        post = gap_size-x
+        frames.append(f"{" "*pre}{string_unit}{" "*post}")
+    print(*frames,sep='\n')
+    # need to do the math for the full str
+    pass
+
+
+
+
+        
 
 
 def view_cargo(letter_amount=0,package_amount=0):
@@ -143,6 +193,11 @@ def view_cargo(letter_amount=0,package_amount=0):
     package = '[]'
     letter = '/'
     longest_side = max(len(package_rows),len(letter_rows))
+
+    # package_list_str = [f"{package*pack}" for pack in package_rows]
+    # letter_list_str = [f"{letter*let}" for let in letter_rows]
+    # if letter_amount%2:
+
     
     # load packages from left and letters from right
     row_list = []
@@ -183,14 +238,14 @@ def unload_cargo(letters_to_unload=0,packages_to_unload=0):
     if letters_to_unload == 0 and packages_to_unload == 0:
         view_cargo()
     else:
-        while letters_to_unload>0 and packages_to_unload>0:
-            os.system('cls')
-            view_cargo(letters_to_unload,packages_to_unload)
-            if letters_to_unload!=0:
-                letters_to_unload -=1
-            if packages_to_unload != 0:
-                packages_to_unload -= 1
-            time.sleep(1)
+        # while letters_to_unload>0 and packages_to_unload>0:
+            # os.system('cls')
+        view_cargo(letters_to_unload,packages_to_unload)
+            # if letters_to_unload!=0:
+            #     letters_to_unload -=1
+            # if packages_to_unload != 0:
+            #     packages_to_unload -= 1
+            # time.sleep(1)
     return
 
 def load_cargo(letters_to_load=0,packages_to_load=0):
@@ -198,14 +253,14 @@ def load_cargo(letters_to_load=0,packages_to_load=0):
     if letters_to_load == 0 and packages_to_load == 0:
         view_cargo()
     else:
-        while letters_to_load>0 and packages_to_load>0:
-            os.system('cls')
-            view_cargo(letters_to_load,packages_to_load)
-            if letters_to_load!=0:
-                letters_to_load -=1
-            if packages_to_load != 0:
-                packages_to_load -= 1
-            time.sleep(1)
+        # while letters_to_load>0 and packages_to_load>0:
+        #     os.system('cls')
+        view_cargo(letters_to_load,packages_to_load)
+            # if letters_to_load!=0:
+            #     letters_to_load -=1
+            # if packages_to_load != 0:
+            #     packages_to_load -= 1
+            # time.sleep(1)
     return
 
             
@@ -245,7 +300,7 @@ def test_animations():
 
     return
 
-test_animations()
+# test_animations()
 
 "':, ,','., ,:':, ,','., ,:':,                     ,:':, ,','., ,:':, ,','., ,:'"
 ",','., ,:':, ,','., ,:':, ,','.,               ,','., ,:':, ,','., ,:':, ,','.,"
