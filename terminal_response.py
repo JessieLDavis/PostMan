@@ -122,3 +122,29 @@ def get_planet_choice(question:str,playerObj,planetObj):
     except IndexError:
         print(f'{userResponse} is not accepted. Please select a value from the list.')
     return get_planet_choice(question,playerObj,planetObj)
+
+def get_binary_response(question:str,optionKeys:list=["y",'n','na'],allowNull:bool=False):
+    if len(optionKeys)!=3:
+        raise ValueError
+    opt_str = ['Yes','No','Null']
+    opt_new = []
+    if allowNull == None:
+        optionKeys.pop()
+    for ind, key in enumerate(optionKeys):
+        opt_new.append(f"{key} = {opt_str[ind]}")
+    opt_new = '\n'.join(opt_new)
+    response = input(f'{question}\n{opt_new}\n>') 
+    response = response.lower()
+    if response not in optionKeys:
+        print(f"{response} not accepted.")
+        return get_binary_response(question,optionKeys,allowNull)
+    actual = opt_str[optionKeys.index(response)]
+    if actual == 'Yes':
+        return True
+    elif actual == 'No':
+        return False
+    elif allowNull == False:
+        print('Error finding response')
+        return get_binary_response(question,optionKeys,allowNull)
+    else:
+        return None

@@ -93,8 +93,8 @@ def save_game(playerSave,playerObj,planetList):
     except IndexError:
         return "Problem Saving Game"
 
-def game_menu():
-    playerSave = "player/player_save.json"
+def game_menu(playerSave):
+    # playerSave = "player/player_save.json"
     # planetSave = "assets/planets.json"
     # saveLoad = load_save(playerSave)
     saveLoad = None
