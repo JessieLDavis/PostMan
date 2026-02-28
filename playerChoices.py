@@ -82,8 +82,9 @@ def leave(playerObj,planetObj,checkLaunch=True):
 def show_map(playerObj,planetObj):
     map_display(playerObj,planetObj)
     
-def status(playerObj):
-    print(playerObj.status())
+def get_player_status(playerObj):
+    print(f"\n\n{playerObj}\n")
+    print(playerObj.all_status())
 
 def refuel(playerObj):
     # refuel_price
@@ -113,7 +114,11 @@ def refuel(playerObj):
             fuel_choices.append([fuel_per,fuel_level,fuelBlocks])
     print(f'Current Units: {wallet}\t\tCurrent Fuel Level: {percFul*100}%')
     print(f'Current fuel cost is {baseCost} per block.')
-    fuel_level = get_multiple_choice('How much fuel would you like to purchase?',[f"{fl[0]}% = {fl[1]}u" for fl in fuel_choices])
+    # price_list = 
+    fuel_level = get_multiple_choice('How much fuel would you like to purchase?',[f"{fl[0]}% for {fl[1]}u" for fl in fuel_choices],add_other=True,other_text=
+    'Cancel')
+    if fuel_level == 'Cancel':
+        return playerObj
     fuel_level = fuel_level.split('%')[0]
     cost = fuel_dict.get(fuel_level)
     if cost == None:
@@ -130,4 +135,10 @@ def refuel(playerObj):
     print(f'Fuel stores now at {amount}%\n[ +{blocks} blocks ] [ -{price} units ]')
     return playerObj
 
+def influence(playerObj):
+    print(f"Current impact for {playerObj.loc.nameL}: {playerObj.loc.playerImpact}")
+    return
 
+def evesdrop(playerObj,planetObj):
+    # call planet gossip?
+    pass

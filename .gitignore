@@ -7,4 +7,6 @@ __pycache__/
 *.pyd
 *.py[cod]
 
-player/__pycache__/
+player/__pycache__
+assets/__pycache__
+__pycache__

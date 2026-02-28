@@ -15,6 +15,7 @@ PLAYER_OPTS = {
 'help':'Show choice options',
 'quit':'Exit the game'
 }
+HIDDEN_OPTS = {'listen':{'allOpts':['listen','evesdrop','check diplomacy','planet relationships','planetary relations']}}
 
 def get_menu_response(question:str,option_list:list,title_str:str=None,subtitle_str:str=None,sort_opts:bool=False,addOther:bool=True,other_text:str='Quit'):
     if sort_opts:

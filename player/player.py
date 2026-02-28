@@ -5,6 +5,11 @@ class Player():
         self.title = title
         self.cargoManifest = cargoManifest #letters: [(#, destination,item)], packages: [(#,destination,item)]
         self.shipStats = shipStats #cargoSpaceRemaining, speed, fuel, durability 
+    def all_status(self):
+        baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
+        # if self.shipStats.get('fuelRemaining')\
+        fuel_perc = self.check_fuel()
+        return f"{baseStats}\n{fuel_perc}\n\n"
     def __str__(self):
         baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
         # if self.shipStats.get('fuelRemaining')\
@@ -24,7 +29,7 @@ class Player():
         return cargoStr
     
     def status(self):
-        statusStr = ""
+        statusStr = f"\n\nShip Stats:\n"
         for key, value in self.shipStats.items():
             statusStr += f"{key}: {value}\n"
         return statusStr

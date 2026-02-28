@@ -1,8 +1,8 @@
 #main menu
 from gameMenu import game_menu
 from optionsMenu import options_menu
-from terminal_response import get_menu_response, get_multiple_choice, prompt_response
-from playerChoices import search,deliver,leave,show_map,status, refuel
+from terminal_response import get_menu_response, get_multiple_choice, prompt_response, PLAYER_OPTS
+from playerChoices import search,deliver,leave,show_map,get_player_status, refuel,influence
 from nav_page import Planet
 # from nav_page import selectio
 
@@ -45,7 +45,9 @@ def playing(playerObj,planetObj:Planet)->bool:
     elif response == 'map':
         show_map(planetObj,planetObj)
     elif response == 'status':
-        status(playerObj)
+        get_player_status(playerObj)
+    elif response == 'influence':
+        influence(playerObj)
     elif response == 'check fuel':
         percF = playerObj.check_fuel(False)
         print(f"Fuel at {percF*100}%")
