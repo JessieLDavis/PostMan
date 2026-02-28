@@ -23,6 +23,7 @@ def mainMenu():
         while active:
             os.system('cls')
             active = playing(playerObj,planetList)
+            
         confirm_save = get_binary_response('Would you like to save?')
         if confirm_save == True:
             save_game(PLAYER_SAVE,playerObj,planetList)
@@ -41,6 +42,8 @@ def playing(playerObj,planetObj:Planet)->bool:
     print()
     print(playerObj.loc.welcomeMsg())
     # print action?
+    if playerObj.message != '':
+        print(f"> {playerObj.message}")
     print(playerObj.cargo())
     response = prompt_response()
     if response == 'quit':

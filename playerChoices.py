@@ -2,15 +2,20 @@ from random import choice, choices
 from assets.animations import *
 from terminal_response import get_multiple_choice, get_planet_choice
 
-def search(playerObj,planetClass):       
+def search(playerObj,planetClass): 
+    playerObj.message = ''      
     # choice_range = range(30,step=2)
     num = choice(range(0,30,2))
     if num == 0:
         print("No deliverables found.")
+        playerObj.message = 'No deliverables found.'
+        time.sleep(1)
         return 
     cargoSpace = playerObj.shipStats.get('cargoSpaceRemaining')
     if cargoSpace < num:
         print('Not enough space!')
+        playerObj.message = 'Cargo was not loaded due to capacity.'
+        time.sleep(1)
         return
     destination = [plan for plan in planetClass.planet_dict.values() if plan != playerObj.loc]
     origin = playerObj.loc
@@ -18,6 +23,7 @@ def search(playerObj,planetClass):
     product = choice(playerObj.loc.products)
     selection = (num,destination,product,origin)
     print(f'Loaded {num} {product} to deliver to {destination.nameL}')
+    playerObj.message = f'Loaded {num} {product} to deliver to {destination.nameL}'
     if playerObj.loc.nameL == "Post Office":
         playerObj.cargoManifest["letters"].append(selection)
     else:
@@ -26,6 +32,7 @@ def search(playerObj,planetClass):
     return playerObj
 
 def deliver(playerObj,anySuccess=False):
+    playerObj.message = ''
     letterList = [plan for plan in playerObj.cargoManifest["letters"] if plan[1] == playerObj.loc]
     packageList = [plan for plan in playerObj.cargoManifest["packages"] if plan[1] == playerObj.loc]
     deliverList = letterList + packageList
@@ -55,9 +62,12 @@ def deliver(playerObj,anySuccess=False):
         return playerObj,True
     else:
         print('No items to deliver! Reloading cargo.')
+        time.sleep(1)
+        playerObj.message = ''
         return playerObj, anySuccess
     
 def leave(playerObj,planetObj,checkLaunch=True):
+    playerObj.message = ''
     if checkLaunch:
         launched = playerObj.ship_fuel_drain(1)
         if launched == False:
@@ -70,6 +80,7 @@ def leave(playerObj,planetObj,checkLaunch=True):
         arrived = playerObj.ship_fuel_drain(dist)
         if arrived == False:
             print('Selected planet is too far at current fuel level.')
+            time.sleep(1)
             return leave(playerObj,planetObj,False)
         
     try:
@@ -80,11 +91,13 @@ def leave(playerObj,planetObj,checkLaunch=True):
         return playerObj
 
 def show_map(playerObj,planetObj):
-    map_display(playerObj,planetObj)
+    playerObj.message = map_display(playerObj,planetObj)
     
 def get_player_status(playerObj):
     print(f"\n\n{playerObj}\n")
     print(playerObj.all_status())
+    playerObj.message = playerObj.all_status()
+    return playerObj
 
 def refuel(playerObj):
     # refuel_price
@@ -93,11 +106,13 @@ def refuel(playerObj):
     wallet = playerObj.points
     if fuelMax == fuelRem:
         print('Fuel already at max.')
+        time.sleep(1)
         return playerObj
     fuelSlack = fuelMax-fuelRem
     baseCost = playerObj.loc.get_fuel_price()
     if baseCost == 0:
         print(f"Because of your continued efforts, the fuel tech was instructed to fill the fuel stores free of change.\n[ +{fuelSlack} blocks ] [ -0 units ]")
+        playerObj.message = f"Because of your continued efforts, the fuel tech was instructed to fill the fuel stores free of change.\n[ +{fuelSlack} blocks ] [ -0 units ]"
         playerObj.shipStats['fuelRemaining'] = fuelMax
         return playerObj
     percFul = playerObj.check_fuel(False)
@@ -114,6 +129,7 @@ def refuel(playerObj):
             fuel_choices.append([fuel_per,fuel_level,fuelBlocks])
     print(f'Current Units: {wallet}\t\tCurrent Fuel Level: {percFul*100}%')
     print(f'Current fuel cost is {baseCost} per block.')
+    playerObj.message = f'Current fuel cost is {baseCost} per block.'
     # price_list = 
     fuel_level = get_multiple_choice('How much fuel would you like to purchase?',[f"{fl[0]}% for {fl[1]}u" for fl in fuel_choices],add_other=True,other_text=
     'Cancel')
@@ -123,16 +139,18 @@ def refuel(playerObj):
     cost = fuel_dict.get(fuel_level)
     if cost == None:
         print('Not a valid fuel level.')
+        time.sleep(1)
         return refuel(playerObj)
     elif cost > wallet:
         print('Not enough units.')
+        time.sleep(1)
         return playerObj
     
     fuel_section = [sub for sub in fuel_choices if sub[0] == fuel_level][0]
     amount, price, blocks = fuel_section
     playerObj.shipStats['fuelRemaining'] += blocks
     playerObj.points -= price
-    print(f'Fuel stores now at {amount}%\n[ +{blocks} blocks ] [ -{price} units ]')
+    playerObj.message = f'Fuel stores now at {amount}%\n[ +{blocks} blocks ] [ -{price} units ]'
     return playerObj
 
 def influence(playerObj):

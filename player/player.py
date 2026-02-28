@@ -3,12 +3,17 @@ class Player():
         self.loc = loc
         self.points = points
         self.title = title
-        self.cargoManifest = cargoManifest #letters: [(#, destination,item)], packages: [(#,destination,item)]
+        self.cargoManifest = cargoManifest 
+        self.message = ''
+        #letters: [(#, destination,item)], packages: [(#,destination,item)]
         self.shipStats = shipStats #cargoSpaceRemaining, speed, fuel, durability 
     def all_status(self):
+        #still busted and dont know why
         baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
         # if self.shipStats.get('fuelRemaining')\
+        print(baseStats)
         fuel_perc = self.check_fuel()
+        print(f"Fuel: {fuel_perc}")
         return f"{baseStats}\n{fuel_perc}\n\n"
     def __str__(self):
         baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
