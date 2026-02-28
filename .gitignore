@@ -6,3 +6,5 @@ __pycache__/
 *.pyo
 *.pyd
 *.py[cod]
+
+player/__pycache__/
