@@ -128,7 +128,7 @@ def get_binary_response(question:str,optionKeys:list=["y",'n','na'],allowNull:bo
         raise ValueError
     opt_str = ['Yes','No','Null']
     opt_new = []
-    if allowNull == None:
+    if allowNull == False:
         optionKeys.pop()
     for ind, key in enumerate(optionKeys):
         opt_new.append(f"{key} = {opt_str[ind]}")

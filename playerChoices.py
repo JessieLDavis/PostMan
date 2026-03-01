@@ -54,6 +54,7 @@ def deliver(playerObj,anySuccess=False):
 
             print(f'{number} {product} delivered!')
             print(f'[+ {newPts} units]')
+            playerObj.message = f'{number} {product} delivered!\n[+ {newPts} units]'
             if product == "letters":
                 playerObj.cargoManifest["letters"].remove(item)
             else:
@@ -94,9 +95,10 @@ def show_map(playerObj,planetObj):
     playerObj.message = map_display(playerObj,planetObj)
     
 def get_player_status(playerObj):
-    print(f"\n\n{playerObj}\n")
-    print(playerObj.all_status())
-    playerObj.message = playerObj.all_status()
+    # print(f"\n\n{playerObj}\n")
+    # print(playerObj.all_status())
+    # playerObj.message = playerObj.all_status()
+    pass
     return playerObj
 
 def refuel(playerObj):

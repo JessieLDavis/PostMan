@@ -9,7 +9,7 @@ class Player():
         self.shipStats = shipStats #cargoSpaceRemaining, speed, fuel, durability 
     def all_status(self):
         #still busted and dont know why
-        baseStats = f"{self.loc.nameL}\n{self.points} Units\n{self.cargo()}\n{self.status}"
+        baseStats = f"Wallet: {self.points}u\n{self.cargo()}"
         # if self.shipStats.get('fuelRemaining')\
         print(baseStats)
         fuel_perc = self.check_fuel()
@@ -33,7 +33,7 @@ class Player():
                 cargoStr += ""
         return cargoStr
     
-    def status(self):
+    def ship_status(self):
         statusStr = f"\n\nShip Stats:\n"
         for key, value in self.shipStats.items():
             statusStr += f"{key}: {value}\n"

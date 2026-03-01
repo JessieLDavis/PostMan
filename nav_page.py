@@ -125,7 +125,12 @@ class Planet():
     
     def get_fuel_price(self):
         #price per block. should be relatively cheap for now?
-        basePrice = 300 - (self.playerImpact/1000)
+        gas_station = Planet.gas_station.get(self.nameL,False)
+        if gas_station == False:
+            basePrice = 300 - (self.playerImpact/1000)
+        else:
+            #gas prices cheaper from station in the short term but might not be better in long
+            basePrice = 50
         if basePrice < 0:
             basePrice = 0
         else:
