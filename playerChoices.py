@@ -1,29 +1,37 @@
 from random import choice, choices
 from assets.animations import *
-from terminal_response import get_multiple_choice, get_planet_choice
+from assets.screens import show_sub_menu
+from assets.terminal_response import get_multiple_choice, get_planet_choice
 
-def search(playerObj,planetClass): 
-    playerObj.message = ''      
-    # choice_range = range(30,step=2)
+
+def search(playerObj,planetClass):
+    str_list = show_sub_menu(playerObj,add_delay=True,delayStr="Searching for deliverables")
+    playerObj.message = ''   
+    # str_path = ["Searching for deliverables."]
     num = choice(range(0,30,2))
     if num == 0:
-        print("No deliverables found.")
-        playerObj.message = 'No deliverables found.'
+        # str_list.append('No deliverables found.')
+        show_sub_menu(playerObj,messageStr="No deliverables found.",last_str=str_list)
+        playerObj.message = f"No deliverables found in search."
         time.sleep(1)
         return 
+    else:
+        str_list = show_sub_menu(playerObj,messageStr=f"{num} packages found.",last_str=str_list)
     cargoSpace = playerObj.shipStats.get('cargoSpaceRemaining')
     if cargoSpace < num:
-        print('Not enough space!')
+        str_list = show_sub_menu(playerObj,messageStr=f"Not enough space in cargo hold!",last_str=str_list)
         playerObj.message = 'Cargo was not loaded due to capacity.'
         time.sleep(1)
         return
+    
     destination = [plan for plan in planetClass.planet_dict.values() if plan != playerObj.loc]
     origin = playerObj.loc
     destination = choice(destination)
     product = choice(playerObj.loc.products)
     selection = (num,destination,product,origin)
-    print(f'Loaded {num} {product} to deliver to {destination.nameL}')
+    str_list = show_sub_menu(playerObj,messageStr=f'Loaded {num} {product} to deliver to {destination.nameL}',last_str=str_list)
     playerObj.message = f'Loaded {num} {product} to deliver to {destination.nameL}'
+
     if playerObj.loc.nameL == "Post Office":
         playerObj.cargoManifest["letters"].append(selection)
     else:
@@ -32,12 +40,15 @@ def search(playerObj,planetClass):
     return playerObj
 
 def deliver(playerObj,anySuccess=False):
+    
     playerObj.message = ''
     letterList = [plan for plan in playerObj.cargoManifest["letters"] if plan[1] == playerObj.loc]
     packageList = [plan for plan in playerObj.cargoManifest["packages"] if plan[1] == playerObj.loc]
     deliverList = letterList + packageList
+    str_list = show_sub_menu(playerObj,"",delayStr="Unloading cargo",add_delay=True)
     if len(deliverList) != 0:
-        print('Unloading cargo.')
+        totalDelivered = 0
+        totalProfit = 0
         for item in deliverList:
             number, destination, product, origin = item
             playerObj.loc.playerImpact += number
@@ -51,29 +62,46 @@ def deliver(playerObj,anySuccess=False):
             except KeyError:
                 destination.planetRelations[origin] = 0
             destination.planetRelations[origin] += number
-
-            print(f'{number} {product} delivered!')
-            print(f'[+ {newPts} units]')
-            playerObj.message = f'{number} {product} delivered!\n[+ {newPts} units]'
+            
+            
+            inter = "-"*WIDTH
+            foundCargo =f'{number} {product} delivered!'
+            pts = f'[+ {newPts} units]'
+            for x in [inter,foundCargo,pts]:
+                str_list = show_sub_menu(playerObj,x,str_list)
+            if anySuccess == False:
+                anySuccess = True
+            # playerObj.message = f'{number} {product} delivered!  [+ {newPts} units]'
+            totalDelivered += number
+            totalProfit += newPts
             if product == "letters":
                 playerObj.cargoManifest["letters"].remove(item)
             else:
                 playerObj.cargoManifest["packages"].remove(item)
+        playerObj.message = f"{totalDelivered} delivered. [ + {totalProfit} units]"
         playerObj.ship_cargo_set()
-        return playerObj,True
+        # return playerObj,True
     else:
-        print('No items to deliver! Reloading cargo.')
-        time.sleep(1)
-        playerObj.message = ''
-        return playerObj, anySuccess
+        # print('No items to deliver! Reloading cargo.')
+        str_list = show_sub_menu(playerObj,'No deliverables for this location in hold!',str_list,"Reloading cargo",True)
+        # time.sleep(1)
+        playerObj.message = 'No items to deliver.'
+
+    time.sleep(1)
+    return playerObj, anySuccess
     
 def leave(playerObj,planetObj,checkLaunch=True):
     playerObj.message = ''
+    str_list = show_sub_menu(playerObj,delayStr="Starting engine",add_delay=True)
     if checkLaunch:
         launched = playerObj.ship_fuel_drain(1)
         if launched == False:
+            str_list = show_sub_menu(playerObj,"Not enough fuel to launch!",delayStr="Talking to Port Authority",delay_amount=5,add_delay=True)
+            str_list = show_sub_menu(playerObj,f"Cleared to stay on {playerObj.loc.nameL} longer.")
+            playerObj.message = "Not enough fuel to launch."
             return playerObj
-    print(f"You are now leaving {playerObj.loc.nameL}.")
+    str_list = show_sub_menu(playerObj,f"You are now leaving {playerObj.loc.nameL}.",str_list)
+    # print()
     planet_choice = get_planet_choice('Choose the number of the planet you would like to visit.',playerObj,planetObj)
     if playerObj.loc != planet_choice:
         opts = [planet_choice.navLoc,planet_choice.navLoc]

@@ -4,7 +4,8 @@ class Player():
         self.points = points
         self.title = title
         self.cargoManifest = cargoManifest 
-        self.message = ''
+        self.message:str = ''
+        self.lastChoice:str = ""
         #letters: [(#, destination,item)], packages: [(#,destination,item)]
         self.shipStats = shipStats #cargoSpaceRemaining, speed, fuel, durability 
     def all_status(self):

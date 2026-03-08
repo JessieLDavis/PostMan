@@ -2,7 +2,7 @@ import json, os
 import random
 from nav_page import Planet
 from player.player import Player
-from terminal_response import get_multiple_choice
+from assets.terminal_response import get_multiple_choice
 
 # self,navLoc,name,description,economy=None,products=None,population=None,fluidCapital=None
 def create_planets(planetList=None): #override w Planet.create_map?

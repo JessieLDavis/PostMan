@@ -1,10 +1,13 @@
 import time
 import os
+from screen_settings import WIDTH,HEIGHT,FRAME_RATE
 # from nav_page import Planet
 # from player.player import Player
+
+
 def launching():
     #https://www.asciiart.eu/ascii-night-sky-generator
-    os.system('cls')
+    # os.system('cls')
     nightsky ={
     "content": "            .               '            .                                      \n .  .                        .                                 '     '          \n            .                        '+                                         \n                                                                                \n                                        o                      .                \n                                                 +     +                        \n        .                                                  .                    \n     .                                                                          \n'                               '                    o                  '       \n                                                 .          *                   \n                                         .                                      \n                                                         .   '                  \n                           +                                                    \n                     .    '                           o                   o     \n                                                                     +     .    \n                                                                     .          \n                   .                                                            \n                                                                              * \n                         .                                              *     + \n                +           o                                                   ",
     "width": 80,
@@ -20,6 +23,7 @@ def launching():
     # for n in nightsky_content:
     frames = 8
     cap = 7
+    frame_list = []
     for x in range(frames):
         ship = '<-[ooo]->'
         if x != 0 and x <= cap:
@@ -35,12 +39,18 @@ def launching():
             ship_row = ''.join(ship_row)
             nightsky_content[-cap] = ship_row
         nightsky_content = '\n'.join(nightsky_content)
-        os.system('cls')
-        print(nightsky_content)
-        # print('-----'*10)
-        time.sleep(.02)
-        
+
+        frame_list.append(nightsky_content)
         nightsky_content = nightsky.get('content').split('\n')
+        # os.system('cls')
+    for f in frame_list:
+        os.system('cls')
+        print(f)
+    # print('-----'*10)
+        time.sleep(FRAME_RATE)
+
+        
+        
 
 def landing():
     #https://www.asciiart.eu/ascii-night-sky-generator
@@ -78,7 +88,7 @@ def landing():
         os.system('cls')
         print(nightsky_content)
         # print('-----'*10)
-        time.sleep(.02)
+        time.sleep(FRAME_RATE)
         
         nightsky_content = nightsky.get('content').split('\n')
 
@@ -268,7 +278,9 @@ def load_cargo(letters_to_load=0,packages_to_load=0):
 
 
 def test_animations():
-
+    # pr
+    int(FRAME_RATE)
+    input(FRAME_RATE)
     print('Launching:')
     launching()
     input('-'*80)

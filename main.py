@@ -1,8 +1,9 @@
 #main menu
 import os
+from assets.screens import show_menu
 from gameMenu import game_menu, save_game
 from optionsMenu import options_menu
-from terminal_response import get_menu_response, get_multiple_choice, prompt_response, PLAYER_OPTS, get_binary_response
+from assets.terminal_response import get_menu_response, prompt_response, get_binary_response
 from playerChoices import search,deliver,leave,show_map,get_player_status, refuel,influence
 from nav_page import Planet
 # from nav_page import selectio
@@ -38,14 +39,13 @@ def mainMenu():
 def playing(playerObj,planetObj:Planet)->bool:
     if playerObj.loc == None:
         playerObj.loc = planetObj.post_office
-    print(f'-'*50)
-    print()
-    print(playerObj.loc.welcomeMsg())
+    show_menu()
     # print action?
-    if playerObj.message != '':
-        print(f"> {playerObj.message}")
-    print(playerObj.cargo())
+    # if playerObj.message != '':
+    #     print(f"> {playerObj.message}")
+    # print(playerObj.cargo())
     response = prompt_response()
+    playerObj.lastChoice = response
     if response == 'quit':
         return False
     elif response == 'search':

@@ -1,27 +1,15 @@
 from random import choices
+import os
+from assets.screen_settings import *
 
-PLAYER_OPTS = {
-'search':'Find letters at the Post Office or packages at different planets',
-'deliver':'Drop letters or packages at the target destination',
-
-'check fuel': 'Get current fuel level',
-'refuel': 'Get fuel at current market rate',
-
-'leave':'Travel to another station or planet',
-'map': 'Show planetary map',
-'status': 'Show player stats',
-'influence': 'Show player - planet relationship',
-
-'help':'Show choice options',
-'quit':'Exit the game'
-}
-HIDDEN_OPTS = {'listen':{'allOpts':['listen','evesdrop','check diplomacy','planet relationships','planetary relations']}}
 
 def get_menu_response(question:str,option_list:list,title_str:str=None,subtitle_str:str=None,sort_opts:bool=False,addOther:bool=True,other_text:str='Quit'):
+    os.system('cls')
     if sort_opts:
         option_list.sort()
     if title_str != None:
         print()
+        # title_full = f'+--{title_str}'
         print('---'*10,title_str,'---'*10)
     if subtitle_str != None:
         base_gap = 10
