@@ -41,18 +41,28 @@ def show_sub_menu(playerObj,messageStr:str="",last_str:list=[],delayStr:str="Pro
     time.sleep(1)
     return last_str
 
-def reformat_str(message_list:list):
+def show_decision_menu(prompt:str,messageStr:str,last_str:list=[],validChoices:dict={}):
+    # to replace
+    pass
+
+
+
+def reformat_str(message_list:list,additional_sub_width:int=0):
     m_list = []
+    if additional_sub_width>= WIDTH:
+        raise TypeError
+    else:
+        text_width = WIDTH-additional_sub_width
     for m in message_list:
         if "\n" in m:
             mn = reformat_str(m.split('\n'))
             m_list.extend(mn)
-        elif len(m) >= WIDTH:
+        elif len(m) >= text_width:
             mn = []
-            while len(m) >=WIDTH:
-                n_m = m[:WIDTH]
+            while len(m) >=text_width:
+                n_m = m[:text_width]
                 mn.append(n_m)
-                m = m[WIDTH:]
+                m = m[text_width:]
             mn.append(m)
             m_list.extend(mn)
         else:
@@ -73,3 +83,26 @@ def limit_height(last_str:list=[],add_delay:bool=False):
         last_str = empty_str + last_str
     return last_str
     
+def center_text(last_str:list,borderLeft:str="|",borderRight:str="|",blank:str=" "):
+    borderLen = len(borderLeft) +len(borderRight)
+    if borderLen >= WIDTH:
+        raise ValueError
+    widthMin = WIDTH - borderLen
+    centered_list = []
+    for string in last_str:
+        if string > WIDTH:
+            return center_text(reformat_str(last_str,widthMin))
+        strLen = len(string)
+        if strLen+borderLen == WIDTH:
+            # string is as long as sides
+            new_string = f"{borderLeft}{string}{borderRight}"
+        elif strLen == 0:
+            new_string = f"{borderLeft}{blank*widthMin}{borderRight}"
+        else:
+            widthRem = widthMin - strLen
+            widthLeft = int(widthRem/2)
+            widthRight = widthRem - widthLeft
+            new_string = f"{borderLeft}{blank*widthLeft}{string}{blank*widthRight}{borderRight}"
+        centered_list.append(new_string)
+    return centered_list
+
